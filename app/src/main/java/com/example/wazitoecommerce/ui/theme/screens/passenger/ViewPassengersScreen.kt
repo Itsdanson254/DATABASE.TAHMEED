@@ -1,4 +1,4 @@
-package com.example.wazitoecommerce.ui.theme.screens.products
+package com.example.wazitoecommerce.ui.theme.screens.passenger
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
@@ -20,30 +20,29 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontFamily
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
 import coil.compose.rememberAsyncImagePainter
-import com.example.wazitoecommerce.data.ProductViewModel
-import com.example.wazitoecommerce.models.Product
+import com.example.wazitoecommerce.data.PassengerViewModel
+import com.example.wazitoecommerce.models.Passenger
 import com.example.wazitoecommerce.ui.theme.WazitoECommerceTheme
 
 @Composable
-fun ViewProductsScreen(navController:NavHostController) {
+fun ViewPassengersScreen(navController:NavHostController) {
     Column(modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally) {
 
         var context = LocalContext.current
-        var productRepository = ProductViewModel(navController, context)
+        var passengerRepository = PassengerViewModel(navController, context)
 
 
-        val emptyProductState = remember { mutableStateOf(Product("","","","","")) }
-        var emptyProductsListState = remember { mutableStateListOf<Product>() }
+        val emptyPassengerState = remember { mutableStateOf(Passenger("","","","","")) }
+        var emptyPassengersListState = remember { mutableStateListOf<Passenger>() }
 
-        var products = productRepository.allProducts(emptyProductState, emptyProductsListState)
+        var passengers = passengerRepository.allProducts(emptyPassengerState, emptyPassengersListState)
 
 
         Column(
@@ -51,7 +50,7 @@ fun ViewProductsScreen(navController:NavHostController) {
                 .fillMaxSize(),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "All products",
+            Text(text = "All passengers",
                 fontSize = 30.sp,
                 fontFamily = FontFamily.Cursive,
                 color = Color.Red)
@@ -59,15 +58,15 @@ fun ViewProductsScreen(navController:NavHostController) {
             Spacer(modifier = Modifier.height(20.dp))
 
             LazyColumn(){
-                items(products){
-                    ProductItem(
+                items(passengers){
+                    PassengerItem(
                         name = it.name,
-                        quantity = it.quantity,
-                        price = it.price,
+                        destination = it.destination,
+                        fare = it.fare,
                         id = it.id,
                         navController = navController,
-                        productRepository = productRepository,
-                        productImage = it.imageUrl
+                        passengerRepository = passengerRepository,
+                        passengerImage = it.imageUrl
                     )
                 }
             }
@@ -77,26 +76,26 @@ fun ViewProductsScreen(navController:NavHostController) {
 
 
 @Composable
-fun ProductItem(name:String, quantity:String, price:String, id:String,
+fun PassengerItem(name:String, destination:String, fare:String, id:String,
                 navController:NavHostController,
-                productRepository:ProductViewModel, productImage:String) {
+                passengerRepository:PassengerViewModel, passengerImage:String) {
 
     Column(modifier = Modifier.fillMaxWidth()) {
         Text(text = name)
-        Text(text = quantity)
-        Text(text = price)
+        Text(text = destination)
+        Text(text = fare)
         Image(
-            painter = rememberAsyncImagePainter(productImage),
+            painter = rememberAsyncImagePainter(passengerImage),
             contentDescription = null,
             modifier = Modifier.size(250.dp)
         )
         Button(onClick = {
-            productRepository.deleteProduct(id)
+            passengerRepository.deleteProduct(id)
         }) {
             Text(text = "Delete")
         }
         Button(onClick = {
-            //navController.navigate(ROUTE_UPDATE_PRODUCTS+"/$id")
+            //navController.navigate(ROUTE_UPDATE_PASSENGERS+"/$id")
         }) {
             Text(text = "Update")
         }
@@ -105,8 +104,8 @@ fun ProductItem(name:String, quantity:String, price:String, id:String,
 
 @Composable
 @Preview(showBackground = true)
-fun ViewProductsScreenPreview(){
+fun ViewPassengersScreenPreview(){
     WazitoECommerceTheme {
-        ViewProductsScreen(navController = rememberNavController())
+        ViewPassengersScreen(navController = rememberNavController())
     }
 }

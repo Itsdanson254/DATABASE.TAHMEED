@@ -1,4 +1,4 @@
-package com.example.wazitoecommerce.ui.theme.screens.products
+package com.example.wazitoecommerce.ui.theme.screens.passenger
 
 import android.content.Context
 import android.net.Uri
@@ -34,52 +34,52 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.example.wazitoecommerce.data.ProductViewModel
+import com.example.wazitoecommerce.data.PassengerViewModel
 import com.example.wazitoecommerce.ui.theme.WazitoECommerceTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun AddProductsScreen(navController:NavHostController){
+fun AddPassengersScreen(navController:NavHostController){
     Column(
         modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Add Products",
+            text = "Add Passengers",
             fontSize = 40.sp,
             fontWeight = FontWeight.Bold,
             fontFamily = FontFamily.Cursive
         )
 
-        var productName by remember { mutableStateOf("") }
-        var productQuantity by remember { mutableStateOf("") }
-        var productPrice by remember { mutableStateOf("") }
+        var passengerName by remember { mutableStateOf("") }
+        var passengerDestination by remember { mutableStateOf("") }
+        var passengerfare by remember { mutableStateOf("") }
         val context = LocalContext.current
 
         Spacer(modifier = Modifier.height(30.dp))
 
         OutlinedTextField(
-            value = productName,
-            onValueChange = { productName = it },
-            label = { Text(text = "Product name *") },
+            value = passengerName,
+            onValueChange = { passengerName = it },
+            label = { Text(text = "Passenger name *") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
-            value = productQuantity,
-            onValueChange = { productQuantity = it },
-            label = { Text(text = "Product quantity *") },
+            value = passengerDestination,
+            onValueChange = { passengerDestination = it },
+            label = { Text(text = "passenger destination *") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
         Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
-            value = productPrice,
-            onValueChange = { productPrice = it },
-            label = { Text(text = "Product price *") },
+            value = passengerfare,
+            onValueChange = { passengerfare = it },
+            label = { Text(text = "Passenger fare *") },
             keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text)
         )
 
@@ -90,7 +90,7 @@ fun AddProductsScreen(navController:NavHostController){
         //---------------------IMAGE PICKER START-----------------------------------//
 
         var modifier = Modifier
-        ImagePicker(modifier,context, navController, productName.trim(), productQuantity.trim(), productPrice.trim())
+        ImagePicker(modifier,context, navController, passengerName.trim(), passengerDestination.trim(), passengerfare.trim())
 
         //---------------------IMAGE PICKER END-----------------------------------//
 
@@ -100,7 +100,7 @@ fun AddProductsScreen(navController:NavHostController){
 }
 
 @Composable
-fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, name:String, quantity:String, price:String) {
+fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: NavHostController, name:String, destination:String, fare:String) {
     var hasImage by remember { mutableStateOf(false) }
     var imageUri by remember { mutableStateOf<Uri?>(null) }
 
@@ -136,8 +136,8 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
 
             Button(onClick = {
                 //-----------WRITE THE UPLOAD LOGIC HERE---------------//
-                var productRepository = ProductViewModel(navController,context)
-                productRepository.uploadProduct(name, quantity, price,imageUri!!)
+                var passengerRepository = PassengerViewModel(navController,context)
+                passengerRepository.uploadProduct(name, destination, fare,imageUri!!)
 
 
             }) {
@@ -151,6 +151,6 @@ fun ImagePicker(modifier: Modifier = Modifier, context: Context,navController: N
 @Preview(showBackground = true)
 fun AddProductsScreenPreview(){
     WazitoECommerceTheme {
-        AddProductsScreen(navController = rememberNavController())
+        AddPassengersScreen(navController = rememberNavController())
     }
 }
