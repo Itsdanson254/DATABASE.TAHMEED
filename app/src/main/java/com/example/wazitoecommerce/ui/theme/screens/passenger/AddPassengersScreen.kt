@@ -47,8 +47,7 @@ fun AddPassengersScreen(navController:NavHostController){
         Text(
             text = "Add Passengers",
             fontSize = 40.sp,
-            fontWeight = FontWeight.Bold,
-            fontFamily = FontFamily.Cursive
+            fontWeight = FontWeight.Bold
         )
 
         var passengerName by remember { mutableStateOf("") }
